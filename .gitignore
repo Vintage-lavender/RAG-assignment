@@ -1,0 +1,10 @@
+# data, cache files
+data/
+**/__pycache__/**
+rag_assignment.egg-info
+
+# output files
+**/outputs/**
+
+# test files
+tests

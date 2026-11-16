@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rag-assignment"
+version = "0.1.0"
+description = "NQ-open RAG assignment baseline (Google Colab free / T4)"
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    # --- Colab 사전 설치 ---
+    "torch",
+    "transformers>=5",
+    "accelerate",
+    "datasets>=4",
+    "sentence-transformers>=5",
+    "numpy>=2",
+    "tqdm",
+    # --- Colab 미설치 ---
+    "faiss-cpu==1.16.0",
+    "bm25s==0.3.16",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
