@@ -1,15 +1,14 @@
 from pathlib import Path
 
 from .bm25 import BM25Retriever
-from .dense import DenseRetriever
 from .base import BaseRetriever, DocEntry, RetrievalResult
 from rag_assignment.paths import INDEX_DIR
 
 
-RETRIEVERS: dict[str, type[BaseRetriever]] = {"lexical": BM25Retriever, "dense": DenseRetriever}
+RETRIEVERS: dict[str, type[BaseRetriever]] = {"lexical": BM25Retriever}
 
 def get_retriever(
-    mode: str = "dense",
+    mode: str = "lexical",
     corpus: list[DocEntry] | None = None,
     index_dir: str | Path | None = None,
     **kwargs,
@@ -33,6 +32,6 @@ def get_retriever(
 
 
 __all__ = [
-    "BaseRetriever", "RetrievalResult", "BM25Retriever", "DenseRetriever",
+    "BaseRetriever", "RetrievalResult", "BM25Retriever",
     "RETRIEVERS", "get_retriever"
 ]
