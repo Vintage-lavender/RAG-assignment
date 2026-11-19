@@ -83,6 +83,10 @@ def evaluate(
         "f1": sum(r.metrics.f1 for r in results) / n,
         "recall_at_k": {k: sum(r.metrics.recall_at_k[k] for r in results) / n for k in kvalues},
         "closed_book": all(len(retrieval[qa.qid]["pids"]) == 0 for qa in qa_entries),
+        "tokens": {
+            "input_mean": sum(predictions[qa.qid]["n_input_tokens"] for qa in qa_entries) / n,
+            "output_mean": sum(predictions[qa.qid]["n_output_tokens"] for qa in qa_entries) / n
+        }
     }
     eff_path = output_dir / "efficiency.json"
     if eff_path.exists():
@@ -105,6 +109,9 @@ def print_summary(summary: dict) -> None:
         print("recall@k   : - (closed-book)")
     else:
         print("recall@k   : " + "  ".join(f"@{k}={v:.4f}" for k, v in summary["recall_at_k"].items()))
+    tok = summary["tokens"]
+    print(f"tokens/q   : input={tok['input_mean']:.1f}  output={tok['output_mean']:.1f}")
+
     if "efficiency" in summary:
         eff = summary["efficiency"]
         stages = "  ".join(f"{k}={v:.1f}s" for k, v in eff["stage_seconds"].items())
